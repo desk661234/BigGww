@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<!-- Fig. 10.11: RandomPicture.html -->
+<!-- HTML5 document that displays randomly selected images. -->
+<html>
+
+<head>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="http://www.pureexample.com/js/lib/jquery.ui.touch-punch.min.js"></script>
+    <meta charset="utf-8">
+    <title>00757009-HW7-1</title>
+    <style type="text/css">
+        div {
+            width: 1500px;
+            
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 100px;
+            margin-top: 100px;
+            color: blue;
+        }
+        #area1 {
+            height: 150px;
+            width: 500px;
+            padding-top: 100px;
+            border-width: 20px;
+            font-size: 30px;
+            margin-left: 450px;
+            border-style: solid;
+            font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", TW-Kai;
+            background-color: orange;
+        }
+        #area2{
+            text-align: center;
+        }
+        #area3 {
+            height: 150px;
+            width: 500px;
+            padding-top: 100px;
+            border-width: 20px;
+            font-size: 30px;
+            margin-left: 450px;
+            border-style: solid;
+            font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", TW-Kai;
+            background-color: orange;
+        }
+        #area4{
+            text-align: center;
+        }
+        #area5 {
+            height: 150px;
+            width: 500px;
+            padding-top: 100px;
+            border-width: 20px;
+            font-size: 30px;
+            margin-left: 450px;
+            border-style: solid;
+            font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", TW-Kai;
+            background-color: orange;
+        }
+        #area6{
+            text-align: center;
+        }
+        .imag {
+            display: inline;
+            margin: 0px;
+        }
+
+        .ignore {
+            display: inline;
+            margin: 0px;
+        }
+
+        .img {
+            width: 60px;
+            height: 80px;
+        }
+
+        .drop-area {
+            width: 20px;
+            height: 10px;
+        }
+
+        #back1{
+            z-index: 2;
+            position: absolute;
+            margin-top: -20px;
+            margin-left: 30px;
+        }
+        #back2{
+            z-index: 2;
+            position: absolute;
+            margin-top: -20px;
+            margin-left: 30px;
+        }
+        #back3{
+            z-index: 2;
+            position: absolute;
+            margin-top: -20px;
+            margin-left: 30px;
+        }
+    </style>
+</head>
+
+<body id="gww">
+        <div id="display" class="display" style="text-align: center;">拉密<br>
+            <input id="end1" type="button" value="殘局1"
+                style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"
+                onclick="endgame1()">
+            <input id="end2" type="button" value="殘局2"
+                style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"
+                onclick="endgame2()">
+            <input id="end3" type="button" value="殘局3"
+                style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"
+                onclick="endgame3()">
+            <input id="break1" type="button" value="破冰1"
+                style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"
+                onclick="ice1()">
+            <input id="break2" type="button" value="破冰2"
+                style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"
+                onclick="ice2()">
+            <input id="break3" type="button" value="破冰3"
+                style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"
+                onclick="ice3()">
+        </div>
+    
+    <div class="drop-area" id="test" style="text-align: center;">
+        <div class="imag" id="in" style="text-align: center;"></div>
+    </div>
+    <script>
+        var allcolor = ["b", "r", "o", "d", "g"];
+        var num = 0;
+        var card1 = [];
+        var picture = "";
+        var button = [];
+        var x;
+        var c = 0;
+        var temp = [];
+        var store = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"];
+
+        var image1 = document.createElement("img");
+        var image2 = document.createElement("img");
+        var image3 = document.createElement("img");
+        var image4 = document.createElement("img");
+        var image5 = document.createElement("img");
+        var image6 = document.createElement("img");
+        var image7 = document.createElement("img");
+        var image8 = document.createElement("img");
+        var image9 = document.createElement("img");
+        var image10 = document.createElement("img");
+        var image11 = document.createElement("img");
+        var image12 = document.createElement("img");
+        var image13 = document.createElement("img");
+        var blank = document.createElement("img");
+        blank.src = "blank.jpg";
+        function start() {
+        }
+        function endgame1() {
+            var zero = document.getElementById("display");
+            var par = zero.parentNode;
+            par.removeChild(zero);
+            var display = document.getElementById("test");
+            var image = document.getElementById("in");
+            var imag1 = document.createElement("div");
+            var imag2 = document.createElement("div");
+            var imag3 = document.createElement("div");
+            var imag4 = document.createElement("div");
+            var imag5 = document.createElement("div");
+            var imag6 = document.createElement("div");
+            var imag7 = document.createElement("div");
+            var imag8 = document.createElement("div");
+            var imag9 = document.createElement("div");
+            var imag10 = document.createElement("div");
+            var imag11 = document.createElement("div");
+            var imag12 = document.createElement("div");
+            var hand = document.createElement("div");
+            var dblank1 = document.createElement("div");
+            var dblank2 = document.createElement("div");
+            var dblank3 = document.createElement("div");
+            dblank1.setAttribute("class", "imag blank1");
+            dblank1.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            dblank2.setAttribute("class", "imag blank2");
+            dblank2.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            dblank3.setAttribute("class", "imag blank2");
+            dblank3.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            image.setAttribute("class", "ignore");
+            display.style.border = "1px solid black";
+            display.style.height = "730px";
+            display.style.width = "1300px";
+            display.style.margin = '0 auto';
+            display.style.position = "relative";
+            image.style.margin = '0';
+            image.style.bottom = "-100px";
+            image.style.position = "relative";
+            image.style.top = "0px";
+            hand.style.width = '1300px';
+            hand.style.height = '50px';
+            hand.style.position = "relative";
+            hand.style.bottom = "-350px";
+            hand.style.margin = '0 auto';
+            imag1.setAttribute("class", "imag");
+            imag2.setAttribute("class", "imag");
+            imag3.setAttribute("class", "imag");
+            imag4.setAttribute("class", "imag");
+            imag5.setAttribute("class", "imag");
+            imag6.setAttribute("class", "imag");
+            imag7.setAttribute("class", "imag");
+            imag8.setAttribute("class", "imag");
+            imag9.setAttribute("class", "imag");
+            imag10.setAttribute("class", "imag");
+            imag11.setAttribute("class", "imag");
+            imag12.setAttribute("class", "imag");
+            image1.setAttribute("class", "img");
+            image2.setAttribute("class", "img");
+            image3.setAttribute("class", "img");
+            image4.setAttribute("class", "img");
+            image5.setAttribute("class", "img");
+            image6.setAttribute("class", "img");
+            image7.setAttribute("class", "img");
+            image8.setAttribute("class", "img");
+            image9.setAttribute("class", "img");
+            image10.setAttribute("class", "img");
+            image11.setAttribute("class", "img");
+            image12.setAttribute("class", "img");
+            blank.setAttribute("class", "img");
+            image1.src = "d7.jpg";
+            image2.src = "d8.jpg";
+            image3.src = "d9.jpg";
+            image4.src = "blank.jpg";
+            image5.src = "d6.jpg";
+            image6.src = "d7.jpg";
+            image7.src = "d8.jpg";
+            image8.src = "d9.jpg";
+            image9.src = "blank.jpg";
+            image10.src = "d10.jpg";
+            image11.src = "b10.jpg";
+            image12.src = "r10.jpg";
+            var hc1 = document.createElement("img");
+            var hc2 = document.createElement("img");
+            var h1 = document.createElement("div");
+            var h2 = document.createElement("div");
+            hc1.src = "d6.jpg";
+            hc2.src = "o10.jpg";
+            hc1.setAttribute("class", "img");
+            hc2.setAttribute("class", "img");
+            h1.setAttribute("class", "imag");
+            h2.setAttribute("class", "imag");
+            h1.setAttribute("id", "hand1");
+            h2.setAttribute("id", "hand2");
+            var place1 = document.createElement("div");
+            place1.setAttribute("class", "imag place1");
+            var place2 = document.createElement("div");
+            place2.setAttribute("class", "imag place2");
+            place1.appendChild(dblank1);
+            imag1.appendChild(image1);
+            place1.appendChild(imag1);
+            imag2.appendChild(image2);
+            place1.appendChild(imag2);
+            imag3.appendChild(image3);
+            place1.appendChild(imag3);
+            image.appendChild(place1);
+            imag4.appendChild(image4);
+            image.appendChild(imag4);
+            imag5.appendChild(image5);
+            image.appendChild(imag5);
+            imag6.appendChild(image6);
+            image.appendChild(imag6);
+            imag7.appendChild(image7);
+            image.appendChild(imag7);
+            imag8.appendChild(image8);
+            image.appendChild(imag8);
+            imag9.appendChild(image9);
+            image.appendChild(imag9);
+            image.innerHTML += "<br>";
+            place2.appendChild(dblank2);
+            imag10.appendChild(image10);
+            place2.appendChild(imag10);
+            imag11.appendChild(image11);
+            place2.appendChild(imag11);
+            imag12.appendChild(image12);
+            place2.appendChild(imag12);
+            place2.appendChild(dblank3);
+            image.appendChild(place2);
+            h1.appendChild(hc1);
+            h2.appendChild(hc2);
+            hand.appendChild(h1);
+            hand.appendChild(h2);
+            image.appendChild(hand);
+            display.appendChild(image);
+            $(function () {
+                $("#hand1").draggable({
+                    revert: "invalid",
+                    scope: 'hand1',
+                    snap: true,
+                    zIndex: 2700,
+                })
+                $(".blank1").droppable({
+                    scope: 'hand1',
+                    drop: function () { h1.setAttribute("id", "finish") },
+                })
+                $("#hand2").draggable({
+                    revert: "invalid",
+                    scope: 'hand2',
+                    snap: true,
+                    zIndex: 2700,
+                })
+                $(".blank2").droppable({
+                    scope: 'hand2',
+                    drop: function () { h2.setAttribute("id", "finish") },
+                })
+                $(".imag").draggable({
+                    revert: "invalid",
+                    zIndex: 2700,
+                })
+            });
+            var fbutton = document.createElement("input");
+            fbutton.type = "button";
+            fbutton.value = "finish";
+            fbutton.style.width = "100px";
+            fbutton.style.height = "50px";
+            fbutton.style.position = "relative";
+            fbutton.style.bottom = "-200px";
+            fbutton.style.right = "-400px";
+            display.appendChild(fbutton);
+            fbutton.onclick = function () {
+                if (h1.id == h2.id) {
+                    display.innerHTML = "Congratulations!!<br>";
+                    var bths = document.createElement("input");
+                    bths.type = "button";
+                    bths.value = "Back To Home Screen";
+                    bths.position = "relative";
+                    bths.style.width = "600px";
+                    bths.style.height = "100px";
+                    bths.style.fontSize = "30px";
+                    bths.style.marginTop = "200px";
+                    bths.style.border = "3px blue double";
+                    display.appendChild(bths);
+                    bths.onclick = function () {
+                        var hp = document.getElementById("gww");
+                        hp.innerHTML = '<div id="display" style="text-align: center;" class="display">拉密<br><input id="end1" type="button" value="殘局1" onclick="endgame1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end2" type="button" value="殘局2" onclick="endgame2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end3" type="button" value="殘局3" onclick="endgame3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break1" type="button" value="破冰1" onclick="ice1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break2" type="button" value="破冰2" onclick="ice2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break3" type="button" value="破冰3" onclick="ice3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"></div><div class="drop-area" style="text-align: center;" id="test"><div class="imag" style="text-align: center;" id="in"></div></div>';
+                    }
+                }
+            }
+        }
+        function endgame2() {
+            var zero = document.getElementById("display");
+            var par = zero.parentNode;
+            par.removeChild(zero);
+            var display = document.getElementById("test");
+            var image = document.getElementById("in");
+            var imag1 = document.createElement("div");
+            var imag2 = document.createElement("div");
+            var imag3 = document.createElement("div");
+            var imag4 = document.createElement("div");
+            var imag5 = document.createElement("div");
+            var imag6 = document.createElement("div");
+            var imag7 = document.createElement("div");
+            var imag8 = document.createElement("div");
+            var hand = document.createElement("div");
+            var dblank1 = document.createElement("div");
+            var dblank2 = document.createElement("div");
+            var dblank3 = document.createElement("div");
+            dblank1.setAttribute("class", "imag blank1");
+            dblank1.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            dblank2.setAttribute("class", "imag blank2");
+            dblank2.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            dblank3.setAttribute("class", "imag blank3");
+            dblank3.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            image.setAttribute("class", "ignore");
+            display.style.border = "1px solid black";
+            display.style.height = "730px";
+            display.style.width = "1300px";
+            display.style.margin = '0 auto';
+            display.style.position = "relative";
+            image.style.margin = '0';
+            image.style.bottom = "-100px";
+            image.style.position = "relative";
+            image.style.top = "0px";
+            hand.style.width = '1300px';
+            hand.style.height = '50px';
+            hand.style.position = "relative";
+            hand.style.bottom = "-100px";
+            hand.style.margin = '0 auto';
+            imag1.setAttribute("class", "imag");
+            imag2.setAttribute("class", "imag");
+            imag3.setAttribute("class", "imag");
+            imag4.setAttribute("class", "imag");
+            imag5.setAttribute("class", "imag");
+            imag6.setAttribute("class", "imag");
+            imag7.setAttribute("class", "imag");
+            imag8.setAttribute("class", "imag");
+            image1.setAttribute("class", "img");
+            image2.setAttribute("class", "img");
+            image3.setAttribute("class", "img");
+            image4.setAttribute("class", "img");
+            image5.setAttribute("class", "img");
+            image6.setAttribute("class", "img");
+            image7.setAttribute("class", "img");
+            image8.setAttribute("class", "img");
+            image1.src = "r3.jpg";
+            image2.src = "d3.jpg";
+            image3.src = "b3.jpg";
+            image4.src = "o3.jpg";
+            image5.src = "b6.jpg";
+            image6.src = "b7.jpg";
+            image7.src = "b8.jpg";
+            image8.src = "b9.jpg";
+            imag1.setAttribute("id", "middle");
+            var hc1 = document.createElement("img");
+            var hc2 = document.createElement("img");
+            var h1 = document.createElement("div");
+            var h2 = document.createElement("div");
+            hc1.src = "r2.jpg";
+            hc2.src = "r4.jpg";
+            hc1.setAttribute("class", "img");
+            hc2.setAttribute("class", "img");
+            h1.setAttribute("class", "imag");
+            h2.setAttribute("class", "imag");
+            h1.setAttribute("id", "hand1");
+            h2.setAttribute("id", "hand2");
+            var place1 = document.createElement("div");
+            var info = document.createElement("div");
+            info.style.position = "relative";
+            info.style.width = "200px";
+            place1.style.border = "1px solid black";
+            place1.style.position = "relative";
+            place1.setAttribute("class", "imag place1");
+            place1.appendChild(dblank1);
+            place1.appendChild(dblank2);
+            place1.appendChild(dblank3);
+            image.appendChild(place1);
+            image.innerHTML += "<br>";
+            info.style.fontSize = "14px";
+            info.style.bottom = "100px";
+            info.style.right = "-550px";
+            info.innerHTML += "請拖曳手牌與場上的牌到上框組成符合規則的牌組";
+            image.appendChild(info);
+            imag1.appendChild(image1);
+            image.appendChild(imag1);
+            imag2.appendChild(image2);
+            image.appendChild(imag2);
+            imag3.appendChild(image3);
+            image.appendChild(imag3);
+            imag4.appendChild(image4);
+            image.appendChild(imag4);
+            image.innerHTML += "<br>";
+            imag5.appendChild(image5);
+            image.appendChild(imag5);
+            imag6.appendChild(image6);
+            image.appendChild(imag6);
+            imag7.appendChild(image7);
+            image.appendChild(imag7);
+            imag8.appendChild(image8);
+            image.appendChild(imag8);
+            image.innerHTML += "<br>";
+            h1.appendChild(hc1);
+            h2.appendChild(hc2);
+            hand.appendChild(h1);
+            hand.appendChild(h2);
+            image.appendChild(hand);
+            display.appendChild(image);
+            $(function () {
+                $("#hand1").draggable({
+                    revert: "invalid",
+                    scope: 'hand1',
+                    snap: true,
+                    zIndex: 2700,
+                })
+                $(".blank1").droppable({
+                    scope: 'hand1',
+                    drop: function () { h1.setAttribute("id", "finish") },
+                })
+                $("#hand2").draggable({
+                    revert: "invalid",
+                    scope: 'hand2',
+                    snap: true,
+                    zIndex: 2700,
+                })
+                $(".blank3").droppable({
+                    scope: 'hand2',
+                    drop: function () { h2.setAttribute("id", "finish") },
+                })
+                $("#middle").draggable({
+                    revert: "invalid",
+                    scope: 'middle',
+                    snap: true,
+                    zIndex: 2700,
+                })
+                $(".blank2").droppable({
+                    scope: 'middle',
+                })
+                $(".imag").draggable({
+                    revert: "invalid",
+                    zIndex: 2700,
+                })
+            });
+            var fbutton = document.createElement("input");
+            fbutton.type = "button";
+            fbutton.value = "finish";
+            fbutton.style.width = "100px";
+            fbutton.style.height = "50px";
+            fbutton.style.position = "relative";
+            fbutton.style.bottom = "0px";
+            fbutton.style.right = "-400px";
+            display.appendChild(fbutton);
+            fbutton.onclick = function () {
+                if (h1.id == h2.id) {
+                    display.innerHTML = "Congratulations!!<br>";
+                    var bths = document.createElement("input");
+                    bths.type = "button";
+                    bths.value = "Back To Home Screen";
+                    bths.position = "relative";
+                    bths.style.width = "600px";
+                    bths.style.height = "100px";
+                    bths.style.fontSize = "30px";
+                    bths.style.marginTop = "200px";
+                    bths.style.border = "3px blue double";
+                    display.appendChild(bths);
+                    bths.onclick = function () {
+                        var hp = document.getElementById("gww");
+                        hp.innerHTML = '<div id="display" style="text-align: center;" class="display">拉密<br><input id="end1" type="button" value="殘局1" onclick="endgame1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end2" type="button" value="殘局2" onclick="endgame2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end3" type="button" value="殘局3" onclick="endgame3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break1" type="button" value="破冰1" onclick="ice1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break2" type="button" value="破冰2" onclick="ice2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break3" type="button" value="破冰3" onclick="ice3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"></div><div class="drop-area"style="text-align: center;" id="test"><div class="imag"style="text-align: center;" id="in"></div></div>';
+                    }
+                }
+            }
+        }
+        function endgame3() {
+            var zero = document.getElementById("display");
+            var par = zero.parentNode;
+            par.removeChild(zero);
+            var display = document.getElementById("test");
+            var image = document.getElementById("in");
+            var imag1 = document.createElement("div");
+            var imag2 = document.createElement("div");
+            var imag3 = document.createElement("div");
+            var imag4 = document.createElement("div");
+            var imag5 = document.createElement("div");
+            var imag6 = document.createElement("div");
+            var imag7 = document.createElement("div");
+            var imag8 = document.createElement("div");
+            var imag9 = document.createElement("div");
+            var imag10 = document.createElement("div");
+            var imag11 = document.createElement("div");
+            var imag12 = document.createElement("div");
+            var hand = document.createElement("div");
+            var dblank1 = document.createElement("div");
+            var dblank2 = document.createElement("div");
+            var dblank3 = document.createElement("div");
+            var dblank4 = document.createElement("div");
+            dblank1.setAttribute("class", "imag blank1");
+            dblank1.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            dblank2.setAttribute("class", "imag blank2");
+            dblank2.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            dblank3.setAttribute("class", "imag blank3");
+            dblank3.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            dblank4.setAttribute("class", "imag blank4");
+            dblank4.innerHTML = "<img src=blank.jpg style='width:60px;height:80px;'>";
+            image.setAttribute("class", "ignore");
+            display.style.border = "1px solid black";
+            display.style.height = "730px";
+            display.style.width = "1300px";
+            display.style.margin = '0 auto';
+            display.style.position = "relative";
+            image.style.margin = '0';
+            image.style.bottom = "-100px";
+            image.style.position = "relative";
+            image.style.top = "0px";
+            hand.style.width = '1300px';
+            hand.style.height = '50px';
+            hand.style.position = "relative";
+            hand.style.bottom = "-100px";
+            hand.style.margin = '0 auto';
+            imag1.setAttribute("class", "imag middle");
+            imag2.setAttribute("class", "imag");
+            imag3.setAttribute("class", "imag");
+            imag4.setAttribute("class", "imag");
+            imag5.setAttribute("class", "imag");
+            imag6.setAttribute("class", "imag");
+            imag7.setAttribute("class", "imag");
+            imag8.setAttribute("class", "imag");
+            imag9.setAttribute("class", "imag");
+            imag10.setAttribute("class", "imag middle");
+            imag11.setAttribute("class", "imag");
+            imag12.setAttribute("class", "imag");
+            image1.setAttribute("class", "img");
+            image2.setAttribute("class", "img");
+            image3.setAttribute("class", "img");
+            image4.setAttribute("class", "img");
+            image5.setAttribute("class", "img");
+            image6.setAttribute("class", "img");
+            image7.setAttribute("class", "img");
+            image8.setAttribute("class", "img");
+            image9.setAttribute("class", "img");
+            image10.setAttribute("class", "img");
+            image11.setAttribute("class", "img");
+            image12.setAttribute("class", "img");
+            image1.src = "b1.jpg";
+            image2.src = "b2.jpg";
+            image3.src = "b3.jpg";
+            image4.src = "b4.jpg";
+            image5.src = "b5.jpg";
+            image6.src = "b6.jpg";
+            image7.src = "o2.jpg";
+            image8.src = "r2.jpg";
+            image9.src = "d2.jpg";
+            image10.src = "r1.jpg";
+            image11.src = "r2.jpg";
+            image12.src = "r3.jpg";
+            var hc1 = document.createElement("img");
+            var hc2 = document.createElement("img");
+            var h1 = document.createElement("div");
+            var h2 = document.createElement("div");
+            hc1.src = "o1.jpg";
+            hc2.src = "r4.jpg";
+            hc1.setAttribute("class", "img");
+            hc2.setAttribute("class", "img");
+            h1.setAttribute("class", "imag");
+            h2.setAttribute("class", "imag");
+            h1.setAttribute("id", "hand1");
+            h2.setAttribute("id", "hand2");
+            var place1 = document.createElement("div");
+            var info = document.createElement("div");
+            info.style.position = "relative";
+            info.style.width = "200px";
+            place1.style.border = "1px solid black";
+            place1.style.position = "relative";
+            place1.setAttribute("class", "imag place1");
+            place1.appendChild(dblank1);
+            place1.appendChild(dblank2);
+            place1.appendChild(dblank3);
+            image.appendChild(place1);
+            image.innerHTML += "<br>";
+            info.style.fontSize = "14px";
+            info.style.bottom = "100px";
+            info.style.right = "-550px";
+            info.innerHTML += "請拖曳手牌與場上的牌到上框組成符合規則的牌組";
+            image.appendChild(info);
+            imag1.appendChild(image1);
+            image.appendChild(imag1);
+            imag2.appendChild(image2);
+            image.appendChild(imag2);
+            imag3.appendChild(image3);
+            image.appendChild(imag3);
+            imag4.appendChild(image4);
+            image.appendChild(imag4);
+            imag5.appendChild(image5);
+            image.appendChild(imag5);
+            imag6.appendChild(image6);
+            image.appendChild(imag6);
+            image.innerHTML += "<br>";
+            imag7.appendChild(image7);
+            image.appendChild(imag7);
+            imag8.appendChild(image8);
+            image.appendChild(imag8);
+            imag9.appendChild(image9);
+            image.appendChild(imag9);
+            image.innerHTML += "<img src=blank.jpg style='width:60px;height:80px;'>";
+            imag10.appendChild(image10);
+            image.appendChild(imag10);
+            imag11.appendChild(image11);
+            image.appendChild(imag11);
+            imag12.appendChild(image12);
+            image.appendChild(imag12);
+            image.appendChild(dblank4);
+            image.innerHTML += "<br>";
+            h1.appendChild(hc1);
+            h2.appendChild(hc2);
+            hand.appendChild(h1);
+            hand.appendChild(h2);
+            image.appendChild(hand);
+            display.appendChild(image);
+            $(function () {
+                $("#hand1").draggable({
+                    revert: "invalid",
+                    scope: 'other',
+                    snap: true,
+                    zIndex: 2700,
+                })
+                $(".blank1").droppable({
+                    scope: 'other',
+                    drop: function () { h1.setAttribute("id", "finish") },
+                })
+                $("#hand2").draggable({
+                    revert: "invalid",
+                    scope: 'hand2',
+                    snap: true,
+                    zIndex: 2700,
+                })
+                $(".blank4").droppable({
+                    scope: 'hand2',
+                    drop: function () { h2.setAttribute("id", "finish") },
+                })
+                $(".middle").draggable({
+                    revert: "invalid",
+                    scope: 'other',
+                    snap: true,
+                    zIndex: 2700,
+                })
+                $(".blank2").droppable({
+                    scope: 'other',
+                })
+                $(".blank3").droppable({
+                    scope: 'other',
+                })
+                $(".imag").draggable({
+                    revert: "invalid",
+                    zIndex: 2700,
+                })
+            });
+            var fbutton = document.createElement("input");
+            fbutton.type = "button";
+            fbutton.value = "finish";
+            fbutton.style.width = "100px";
+            fbutton.style.height = "50px";
+            fbutton.style.position = "relative";
+            fbutton.style.bottom = "0px";
+            fbutton.style.right = "-400px";
+            display.appendChild(fbutton);
+            fbutton.onclick = function () {
+                if (h1.id == h2.id) {
+                    display.innerHTML = "Congratulations!!<br>";
+                    var bths = document.createElement("input");
+                    bths.type = "button";
+                    bths.value = "Back To Home Screen";
+                    bths.position = "relative";
+                    bths.style.width = "600px";
+                    bths.style.height = "100px";
+                    bths.style.fontSize = "30px";
+                    bths.style.marginTop = "200px";
+                    bths.style.border = "3px blue double";
+                    display.appendChild(bths);
+                    bths.onclick = function () {
+                        var hp = document.getElementById("gww");
+                        hp.innerHTML = '<div style="text-align: center;" id="display" class="display">拉密<br><input id="end1" type="button" value="殘局1" onclick="endgame1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end2" type="button" value="殘局2" onclick="endgame2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end3" type="button" value="殘局3" onclick="endgame3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break1" type="button" value="破冰1" onclick="ice1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break2" type="button" value="破冰2" onclick="ice2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break3" type="button" value="破冰3" onclick="ice3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"></div><div class="drop-area"style="text-align: center;" id="test"><div class="imag" style="text-align: center;"id="in"></div></div>';
+                    }
+                }
+            }
+        }
+        function save(x) {
+            c++;
+        }
+        function judgeice1() {
+            if (store[1] == 1 && store[3] == 1 && store[3] == 1 && store[7] == 1 && store[8] == 1 && store[9] == 1 && store[10] == 1) alert("恭喜你擁有破冰的第一部基礎了!!!");
+            else alert("是不是有少哪些牌呢?還是你有按錯?再檢查一下吧!!");
+        }
+        function ice1() {
+            var bths = document.createElement("input");
+                    bths.type = "button";
+                    bths.value = "Back To Home Screen";
+                    bths.position = "relative";
+                    bths.style.width = "220px";
+                    bths.style.height = "100px";
+                    bths.style.fontSize = "20px";
+                    bths.style.border = "3px blue double";
+                    bths.onclick = function () {
+                        var hp = document.getElementById("gww");
+                        hp.innerHTML = '<div style="text-align: center;" id="display" class="display">拉密<br><input id="end1" type="button" value="殘局1" onclick="endgame1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end2" type="button" value="殘局2" onclick="endgame2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end3" type="button" value="殘局3" onclick="endgame3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break1" type="button" value="破冰1" onclick="ice1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break2" type="button" value="破冰2" onclick="ice2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break3" type="button" value="破冰3" onclick="ice3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"></div><div class="drop-area" style="text-align: center;" id="test"><div class="imag"style="text-align: center;" id="in"></div></div>';
+                    }
+                    //return;
+            document.getElementById("gww").innerHTML = "";
+
+            var picture = document.createElement("div");
+            picture.setAttribute("id","back1");
+            picture.appendChild(bths);
+            document.getElementById("gww").appendChild(picture);
+
+            var area1=document.createElement("div");
+            area1.id="area1";
+            area1.innerText="三張或四張數字相同但顏色不同的牌";
+            document.getElementById("gww").appendChild(area1);
+
+            var cardpack = document.createElement("div");
+            cardpack.setAttribute("id", "area2");
+            document.getElementById("gww").appendChild(cardpack);
+            //var allcolor = ["b", "r", "o", "d", "g"];
+            //1.三張或四張數字相同但顏色不同的牌
+            card1[0] = `${allcolor[0]}${num + 1}`;
+            card1[1] = `${allcolor[0]}${num + 2}`;//1
+            card1[2] = `${allcolor[1]}${num + 2}`;//2
+            card1[3] = `${allcolor[2]}${num + 2}`;//3
+            card1[4] = `${allcolor[3]}${num + 4}`;
+            card1[5] = `${allcolor[1]}${num + 5}`;
+            card1[6] = `${allcolor[0]}${num + 7}`;
+            card1[7] = `${allcolor[3]}${num + 8}`;//7
+            card1[8] = `${allcolor[2]}${num + 8}`;//8
+            card1[9] = `${allcolor[1]}${num + 8}`;//9
+            card1[10] = `${allcolor[0]}${num + 8}`;//10
+            card1[11] = `${allcolor[2]}${num + 11}`;
+            card1[12] = `${allcolor[3]}${num + 12}`;
+            card1[13] = `${allcolor[1]}${num + 13}`;
+            for (x = 0; x < 14; x++) {
+                button[x] = document.createElement("img");
+                button[x].src = `${card1[x]}.jpg`; //r11.jpg r1.jpg
+                if (x == 1 || x == 2 || x == 3 || x == 7 || x == 8 || x == 9 || x == 10) {
+                    button[x].addEventListener("click", save);
+                }
+                button[x].setAttribute("id", `card${x}`);
+                button[x].setAttribute("onclick", `ogg(${x});store[${x}]=1;`);
+                document.getElementById("area2").appendChild(button[x]);
+            }
+            var submit = document.createElement("input");
+            submit.type = "button";
+            submit.value = "檢查";
+            submit.style.width="200px";
+            submit.style.height="100px";
+            submit.style.marginLeft="100px"
+            submit.style.fontFamily="Tahoma";
+            submit.style.fontSize="60px";
+            submit.style.border="5px solid red";
+            submit.style.color="blue";
+            submit.setAttribute("onclick", "judgeice1()");
+            document.getElementById("area2").appendChild(submit);
+            document.getElementById("gww").appendChild(cardpack);
+        }
+        function judgeice2() {
+            if (store[2] == 1 && store[3] == 1 && store[4] == 1 && store[5] == 1 && store[8] == 1 && store[9] == 1 && store[10] == 1) alert("恭喜你擁有破冰的第二部基礎了!!!");
+            else alert("是不是有少哪些牌呢?還是你有按錯?再檢查一下吧!!");
+        }
+        function ice2() {
+            var bths = document.createElement("input");
+                    bths.type = "button";
+                    bths.value = "Back To Home Screen";
+                    bths.position = "relative";
+                    bths.style.width = "220px";
+                    bths.style.height = "100px";
+                    bths.style.fontSize = "20px";
+                    bths.style.border = "3px blue double";
+                    bths.onclick = function () {
+                        var hp = document.getElementById("gww");
+                        hp.innerHTML = '<div style="text-align: center;" id="display" class="display">拉密<br><input id="end1" type="button" value="殘局1" onclick="endgame1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end2" type="button" value="殘局2" onclick="endgame2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end3" type="button" value="殘局3" onclick="endgame3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break1" type="button" value="破冰1" onclick="ice1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break2" type="button" value="破冰2" onclick="ice2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break3" type="button" value="破冰3" onclick="ice3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"></div><div class="drop-area" style="text-align: center;" id="test"><div class="imag" style="text-align: center;" id="in"></div></div>';
+                    }
+                    //return;
+            document.getElementById("gww").innerHTML = "";
+
+            var picture = document.createElement("div");
+            picture.setAttribute("id","back2");
+            picture.appendChild(bths);
+            document.getElementById("gww").appendChild(picture);
+
+            var area3=document.createElement("div");
+            area3.id="area1";
+            area3.innerText="三張或四張數字相同但顏色不同的牌";
+            document.getElementById("gww").appendChild(area3);
+            
+            var cardpack = document.createElement("div");
+            cardpack.setAttribute("id", "area4");
+            document.getElementById("gww").appendChild(cardpack);
+            //var allcolor = ["b", "r", "o", "d", "g"];
+            //2.三張以上顏色相同數字連續的牌
+            card1[0] = `${allcolor[0]}${num + 1}`;
+            card1[1] = `${allcolor[0]}${num + 2}`;
+            card1[2] = `${allcolor[1]}${num + 2}`;//2
+            card1[3] = `${allcolor[1]}${num + 3}`;//3
+            card1[4] = `${allcolor[1]}${num + 4}`;//4
+            card1[5] = `${allcolor[1]}${num + 5}`;//5
+            card1[6] = `${allcolor[0]}${num + 7}`;
+            card1[7] = `${allcolor[3]}${num + 8}`;
+            card1[8] = `${allcolor[2]}${num + 8}`;//8
+            card1[9] = `${allcolor[2]}${num + 9}`;//9
+            card1[10] = `${allcolor[2]}${num + 10}`;//10
+            card1[11] = `${allcolor[3]}${num + 10}`;
+            card1[12] = `${allcolor[3]}${num + 11}`;
+            card1[13] = `${allcolor[1]}${num + 12}`;
+            for (x = 0; x < 14; x++) {
+                button[x] = document.createElement("img");
+                button[x].src = `${card1[x]}.jpg`; //r11.jpg r1.jpg
+                if (x == 2 || x == 3 || x == 4 || x == 5 || x == 8 || x == 9 || x == 10) {
+                    button[x].addEventListener("click", save);
+                }
+                button[x].setAttribute("id", `card${x}`);
+                button[x].setAttribute("onclick", `ogg(${x});store[${x}]=1;`);
+                document.getElementById("area4").appendChild(button[x]);
+            }
+            var submit = document.createElement("input");
+            submit.type = "button";
+            submit.value = "檢查";
+            submit.style.width="200px";
+            submit.style.height="100px";
+            submit.style.marginLeft="100px"
+            submit.style.fontFamily="Tahoma";
+            submit.style.fontSize="60px";
+            submit.style.border="5px solid red";
+            submit.style.color="blue";
+            submit.setAttribute("onclick", "judgeice2()");
+            document.getElementById("area4").appendChild(submit);
+            document.getElementById("gww").appendChild(cardpack);
+        }
+        function judgeice3() {
+            if (store[2] == 1 && store[3] == 1 && store[4] == 1 && store[5] == 1 && store[6] == 1 && store[9] == 1 && store[10] == 1 && store[11] == 1) alert("恭喜你所有破冰基礎都會了!!!");
+            else alert("數字和有大於30嗎?還是順序錯了呢?再檢查一下吧!!");
+        }
+        function ice3() {
+            var bths = document.createElement("input");
+                    bths.type = "button";
+                    bths.value = "Back To Home Screen";
+                    bths.position = "relative";
+                    bths.style.width = "220px";
+                    bths.style.height = "100px";
+                    bths.style.fontSize = "20px";
+                    bths.style.border = "3px blue double";
+                    bths.onclick = function () {
+                        var hp = document.getElementById("gww");
+                        hp.innerHTML = '<div style="text-align: center;" id="display" class="display">拉密<br><input id="end1" type="button" value="殘局1" onclick="endgame1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end2" type="button" value="殘局2" onclick="endgame2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="end3" type="button" value="殘局3" onclick="endgame3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break1" type="button" value="破冰1" onclick="ice1()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break2" type="button" value="破冰2" onclick="ice2()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"><input id="break3" type="button" value="破冰3" onclick="ice3()" style="width: 200px; height: 100px; font-size: 30px; margin-top: 200px; border:3px blue double;"></div><div class="drop-area" id="test" style="text-align: center;"><div class="imag" style="text-align: center;" id="in"></div></div>';
+                    }
+                    //return;
+            document.getElementById("gww").innerHTML = "";
+
+            var picture = document.createElement("div");
+            picture.setAttribute("id","back3");
+            picture.appendChild(bths);
+            document.getElementById("gww").appendChild(picture);
+
+            var area5=document.createElement("div");
+            area5.id="area1";
+            area5.innerText="加上兩個規則，最後總和還要超過30";
+            document.getElementById("gww").appendChild(area5);
+            var cardpack = document.createElement("div");
+            cardpack.setAttribute("id", "area6");
+            document.getElementById("gww").appendChild(cardpack);
+            //var allcolor = ["b", "r", "o", "d", "g"];
+            //1.三張或四張數字相同但顏色不同的牌
+            //2.三張以上顏色相同數字連續的牌
+            card1[0] = `${allcolor[2]}${num + 1}`;
+            card1[1] = `${allcolor[0]}${num + 2}`;
+            card1[2] = `${allcolor[1]}${num + 2}`;//2
+            card1[3] = `${allcolor[1]}${num + 3}`;//3
+            card1[4] = `${allcolor[1]}${num + 4}`;//4
+            card1[5] = `${allcolor[1]}${num + 5}`;//5
+            card1[6] = `${allcolor[1]}${num + 6}`;//6
+            card1[7] = `${allcolor[3]}${num + 8}`;
+            card1[8] = `${allcolor[2]}${num + 8}`;
+            card1[9] = `${allcolor[2]}${num + 9}`;//9
+            card1[10] = `${allcolor[3]}${num + 9}`;//9
+            card1[11] = `${allcolor[1]}${num + 9}`;//9
+            card1[12] = `${allcolor[0]}${num + 11}`;
+            card1[13] = `${allcolor[1]}${num + 13}`;
+            for (x = 0; x < 14; x++) {
+                button[x] = document.createElement("img");
+                button[x].src = `${card1[x]}.jpg`; //r11.jpg r1.jpg
+                if (x == 2 || x == 3 || x == 4 || x == 5 || x == 6 || x == 9 || x == 10 || x == 11) {
+                    button[x].addEventListener("click", save);
+                }
+                button[x].setAttribute("id", `card${x}`);
+                button[x].setAttribute("onclick", `ogg(${x});store[${x}]=1;`);
+                document.getElementById("area6").appendChild(button[x]);
+            }
+            var submit = document.createElement("input");
+            submit.type = "button";
+            submit.value = "檢查";
+            submit.value = "檢查";
+            submit.style.width="200px";
+            submit.style.height="100px";
+            submit.style.marginLeft="100px"
+            submit.style.fontFamily="Tahoma";
+            submit.style.fontSize="60px";
+            submit.style.border="5px solid red";
+            submit.style.color="blue";
+            submit.setAttribute("onclick", "judgeice3()");
+            document.getElementById("area6").appendChild(submit);
+            document.getElementById("gww").appendChild(cardpack);
+        }
+        // ex: onclick="fn1();fn2()"
+
+        function ogg(x) {
+            document.getElementById(`card${x}`).setAttribute("style", "border:#0000FF 3px solid");
+            document.getElementById(`card${x}`).setAttribute("onclick", `ogg_re(${x});store[${x}]=0;`);
+        }
+        function ogg_re(x) {
+            document.getElementById(`card${x}`).setAttribute("style", "");
+            document.getElementById(`card${x}`).setAttribute("onclick", `ogg(${x});store[${x}]=1;`);
+        }
+        window.addEventListener("load", start, false);
+    </script>
+</body>
+
+</html>
